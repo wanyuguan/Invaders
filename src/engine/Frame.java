@@ -54,9 +54,16 @@ public class Frame extends JFrame {
 	 * @return Return code of the finished screen.
 	 */
 	public final ScreenType setScreen(final Screen screen) {
+		Core.getLogger().info("Starting " + screen.getScreenType() + " " + Core.WIDTH + "x" + Core.HEIGHT +
+				 " at " + Core.FPS + " fps.");
+
 		currentScreen = screen;
 		currentScreen.initialize();
-		return currentScreen.run();
+		ScreenType nextScreen = currentScreen.run();
+
+		Core.getLogger().info("Closing " + screen.getScreenType() + ".");
+
+		return nextScreen;
 	}
 
 	/**

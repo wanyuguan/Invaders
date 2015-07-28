@@ -23,11 +23,11 @@ import screen.TitleScreen;
 public final class Core {
 
 	/** Width of current screen. */
-	private static final int WIDTH = 448;
+	public static final int WIDTH = 448;
 	/** Height of current screen. */
-	private static final int HEIGHT = 520;
+	public static final int HEIGHT = 520;
 	/** Max fps of current screen. */
-	private static final int FPS = 60;
+	public static final int FPS = 60;
 
 	/** Max lives. */
 	private static final int MAX_LIVES = 3;
@@ -35,28 +35,6 @@ public final class Core {
 	private static final int EXTRA_LIFE_FRECUENCY = 3;
 	/** Total number of levels. */
 	private static final int NUM_LEVELS = 7;
-	
-	/** Difficulty settings for level 1. */
-	private static final GameSettings SETTINGS_LEVEL_1 =
-			new GameSettings(5, 4, 60, 2000);
-	/** Difficulty settings for level 2. */
-	private static final GameSettings SETTINGS_LEVEL_2 =
-			new GameSettings(5, 5, 50, 2500);
-	/** Difficulty settings for level 3. */
-	private static final GameSettings SETTINGS_LEVEL_3 =
-			new GameSettings(6, 5, 40, 1500);
-	/** Difficulty settings for level 4. */
-	private static final GameSettings SETTINGS_LEVEL_4 =
-			new GameSettings(6, 6, 30, 1500);
-	/** Difficulty settings for level 5. */
-	private static final GameSettings SETTINGS_LEVEL_5 =
-			new GameSettings(7, 6, 20, 1000);
-	/** Difficulty settings for level 6. */
-	private static final GameSettings SETTINGS_LEVEL_6 =
-			new GameSettings(7, 7, 10, 1000);
-	/** Difficulty settings for level 7. */
-	private static final GameSettings SETTINGS_LEVEL_7 =
-			new GameSettings(8, 7, 2, 500);
 	
 	/** Frame to draw the screen on. */
 	private static Frame frame;
@@ -103,47 +81,50 @@ public final class Core {
 		int width = frame.getWidth();
 		int height = frame.getHeight();
 
-		gameSettings = new ArrayList<GameSettings>();
-		gameSettings.add(SETTINGS_LEVEL_1);
-		gameSettings.add(SETTINGS_LEVEL_2);
-		gameSettings.add(SETTINGS_LEVEL_3);
-		gameSettings.add(SETTINGS_LEVEL_4);
-		gameSettings.add(SETTINGS_LEVEL_5);
-		gameSettings.add(SETTINGS_LEVEL_6);
-		gameSettings.add(SETTINGS_LEVEL_7);
-		
+		// Run the game
+		run(width, height);
+
+		fileHandler.flush();
+		fileHandler.close();
+		System.exit(0);
+	}
+
+	/**
+	 * Start running the game
+	 * @param width
+	 * @param height
+	 */
+	public static void run(int width, int height) {
+		// Get a list of levels to play
+		gameSettings = Levels.getLevels();
+
+		// Hold on to all of the game's information
 		GameState gameState;
 
 		// Start at the title screen
 		ScreenType nextScreen = ScreenType.TitleScreen;
-		
+
 		do {
+			// Reset the game's state each time the game starts over
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
 
-			switch (nextScreen) {
-			case TitleScreen:
+			if(nextScreen == ScreenType.TitleScreen) {
 				// Main menu.
 				currentScreen = new TitleScreen(width, height, FPS);
-				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-						+ " title screen at " + FPS + " fps.");
 				nextScreen = frame.setScreen(currentScreen);
-				LOGGER.info("Closing title screen.");
-				break;
-			case GameScreen:
+			}
+			else if (nextScreen == ScreenType.GameScreen) {
 				// Game & score.
 				do {
-					// One extra live every few levels.
+					// One extra life every few levels.
 					boolean bonusLife = gameState.getLevel()
 							% EXTRA_LIFE_FRECUENCY == 0
 							&& gameState.getLivesRemaining() < MAX_LIVES;
-					
+
 					currentScreen = new GameScreen(gameState,
 							gameSettings.get(gameState.getLevel() - 1),
 							bonusLife, width, height, FPS);
-					LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-							+ " game screen at " + FPS + " fps.");
 					frame.setScreen(currentScreen);
-					LOGGER.info("Closing game screen.");
 
 					gameState = ((GameScreen) currentScreen).getGameState();
 
@@ -156,33 +137,16 @@ public final class Core {
 				} while (gameState.getLivesRemaining() > 0
 						&& gameState.getLevel() <= NUM_LEVELS);
 
-				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-						+ " score screen at " + FPS + " fps, with a score of "
-						+ gameState.getScore() + ", "
-						+ gameState.getLivesRemaining() + " lives remaining, "
-						+ gameState.getBulletsShot() + " bullets shot and "
-						+ gameState.getShipsDestroyed() + " ships destroyed.");
 				currentScreen = new ScoreScreen(width, height, FPS, gameState);
 				nextScreen = frame.setScreen(currentScreen);
-				LOGGER.info("Closing score screen.");
-				break;
-			case HighScroreScreen:
+			}
+			else if (nextScreen == ScreenType.HighScroreScreen) {
 				// High scores.
 				currentScreen = new HighScoreScreen(width, height, FPS);
-				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
-						+ " high score screen at " + FPS + " fps.");
 				nextScreen = frame.setScreen(currentScreen);
-				LOGGER.info("Closing high score screen.");
-				break;
-			default:
-				break;
 			}
 
 		} while (nextScreen != ScreenType.EndGame);
-
-		fileHandler.flush();
-		fileHandler.close();
-		System.exit(0);
 	}
 
 	/**

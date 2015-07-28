@@ -12,7 +12,7 @@ import engine.*;
  * @author <a href="mailto:RobertoIA1987@gmail.com">Roberto Izquierdo Amo</a>
  * 
  */
-public class Screen {
+public abstract class Screen {
 	
 	/** Milliseconds until the screen accepts user input. */
 	private static final int INPUT_DELAY = 1000;
@@ -62,6 +62,12 @@ public class Screen {
 		this.inputDelay.reset();
 		this.nextScreen = ScreenType.EndGame;
 	}
+
+	/**
+	 * Gets the screen's type
+	 * @return The screen's type
+	 */
+	public abstract ScreenType getScreenType();
 
 	/**
 	 * Initializes basic screen properties.

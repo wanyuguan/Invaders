@@ -42,6 +42,12 @@ public class HighScoreScreen extends Screen {
 	}
 
 	/**
+	 * Gets the screen's type
+	 * @return The screen's type
+	 */
+	public ScreenType getScreenType() { return ScreenType.HighScroreScreen; }
+
+	/**
 	 * Starts the action.
 	 * 
 	 * @return Next screen code.

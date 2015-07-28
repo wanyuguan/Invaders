@@ -82,11 +82,23 @@ public class ScoreScreen extends Screen {
 	}
 
 	/**
+	 * Gets the screen's type
+	 * @return The screen's type
+	 */
+	public ScreenType getScreenType() { return ScreenType.ScoreScreen; }
+
+	/**
 	 * Starts the action.
 	 * 
 	 * @return Next screen code.
 	 */
 	public final ScreenType run() {
+		Core.getLogger().info("Score info: "
+				+ this.score + ", "
+				+ this.livesRemaining + " lives remaining, "
+				+ this.bulletsShot + " bullets shot and "
+				+ this.shipsDestroyed + " ships destroyed.");
+
 		super.run();
 
 		return this.nextScreen;

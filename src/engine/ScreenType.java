@@ -8,5 +8,6 @@ public enum ScreenType {
     EndGame,
     GameScreen,
     HighScroreScreen,
+    ScoreScreen,
     TitleScreen,
 }

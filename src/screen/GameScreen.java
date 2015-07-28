@@ -101,6 +101,12 @@ public class GameScreen extends Screen {
 	}
 
 	/**
+	 * Gets the screen's type
+	 * @return The screen's type
+	 */
+	public ScreenType getScreenType() { return ScreenType.GameScreen; }
+
+	/**
 	 * Initializes basic screen properties, and adds necessary elements.
 	 */
 	public final void initialize() {
