@@ -2,6 +2,7 @@ package screen;
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import engine.*;
@@ -20,6 +21,9 @@ import entity.Ship;
  */
 public class GameScreen extends Screen {
 
+	/** Levels between extra life. */
+	private static final int EXTRA_LIFE_FRECUENCY = 3;
+
 	/** Milliseconds until the screen accepts user input. */
 	private static final int INPUT_DELAY = 6000;
 	/** Bonus score for each life remaining at the end of the level. */
@@ -36,9 +40,7 @@ public class GameScreen extends Screen {
 	private static final int SEPARATION_LINE_HEIGHT = 40;
 
 	/** Current game difficulty settings. */
-	private GameSettings gameSettings;
-	/** Current difficulty level number. */
-	private int level;
+	private List<GameSettings> levelSettings;
 	/** Formation of enemy ships. */
 	private EnemyShipFormation enemyShipFormation;
 	/** Player's ship. */
@@ -53,14 +55,8 @@ public class GameScreen extends Screen {
 	private Cooldown screenFinishedCooldown;
 	/** Set of all bullets fired by on screen ships. */
 	private Set<Bullet> bullets;
-	/** Current score. */
-	private int score;
-	/** Player lives left. */
-	private int lives;
-	/** Total bullets shot by the player. */
-	private int bulletsShot;
-	/** Total ships destroyed by the player. */
-	private int shipsDestroyed;
+	/** Game's state. */
+	private GameState gameState;
 	/** Moment the game starts. */
 	private long gameStartTime;
 	/** Checks if the level is finished. */
@@ -73,10 +69,8 @@ public class GameScreen extends Screen {
 	 * 
 	 * @param gameState
 	 *            Current game state.
-	 * @param gameSettings
+	 * @param levelSettings
 	 *            Current game settings.
-	 * @param bonusLife
-	 *            Checks if a bonus life is awarded this level.
 	 * @param width
 	 *            Screen width.
 	 * @param height
@@ -85,19 +79,13 @@ public class GameScreen extends Screen {
 	 *            Frames per second, frame rate at which the game is run.
 	 */
 	public GameScreen(final GameState gameState,
-			final GameSettings gameSettings, final boolean bonusLife,
+			final List<GameSettings> levelSettings,
 			final int width, final int height, final int fps) {
 		super(width, height, fps);
 
-		this.gameSettings = gameSettings;
-		this.bonusLife = bonusLife;
-		this.level = gameState.getLevel();
-		this.score = gameState.getScore();
-		this.lives = gameState.getLivesRemaining();
-		if (this.bonusLife)
-			this.lives++;
-		this.bulletsShot = gameState.getBulletsShot();
-		this.shipsDestroyed = gameState.getShipsDestroyed();
+		this.gameState = gameState;
+		this.levelSettings = levelSettings;
+		this.bonusLife = false;
 	}
 
 	/**
@@ -112,22 +100,26 @@ public class GameScreen extends Screen {
 	public final void initialize() {
 		super.initialize();
 
-		enemyShipFormation = new EnemyShipFormation(this.gameSettings);
+		enemyShipFormation = new EnemyShipFormation(this.levelSettings.get(this.gameState.getLevel()- 1));
 		enemyShipFormation.attach(this);
 		this.ship = new Ship(this.width / 2, this.height - 30);
 		// Appears each 10-30 seconds.
-		this.enemyShipSpecialCooldown = Core.getVariableCooldown(
+		this.enemyShipSpecialCooldown = Main.getVariableCooldown(
 				BONUS_SHIP_INTERVAL, BONUS_SHIP_VARIANCE);
 		this.enemyShipSpecialCooldown.reset();
-		this.enemyShipSpecialExplosionCooldown = Core
+		this.enemyShipSpecialExplosionCooldown = Main
 				.getCooldown(BONUS_SHIP_EXPLOSION);
-		this.screenFinishedCooldown = Core.getCooldown(SCREEN_CHANGE_INTERVAL);
+		this.screenFinishedCooldown = Main.getCooldown(SCREEN_CHANGE_INTERVAL);
 		this.bullets = new HashSet<Bullet>();
 
 		// Special input delay / countdown.
 		this.gameStartTime = System.currentTimeMillis();
-		this.inputDelay = Core.getCooldown(INPUT_DELAY);
+		this.inputDelay = Main.getCooldown(INPUT_DELAY);
 		this.inputDelay.reset();
+
+
+		this.levelFinished = false;
+		this.screenFinishedCooldown.reset();
 	}
 
 	/**
@@ -137,10 +129,6 @@ public class GameScreen extends Screen {
 	 */
 	public final ScreenType run() {
 		super.run();
-
-		this.score += LIFE_SCORE * (this.lives - 1);
-		this.logger.info("Screen cleared with a score of " + this.score);
-
 		return this.nextScreen;
 	}
 
@@ -171,7 +159,7 @@ public class GameScreen extends Screen {
 				}
 				if (inputManager.isKeyDown(KeyEvent.VK_SPACE))
 					if (this.ship.shoot(this.bullets))
-						this.bulletsShot++;
+						this.gameState.setBulletsShot(this.gameState.getBulletsShot() + 1);
 			}
 
 			if (this.enemyShipSpecial != null) {
@@ -202,15 +190,36 @@ public class GameScreen extends Screen {
 		cleanBullets();
 		draw();
 
-		if ((this.enemyShipFormation.isEmpty() || this.lives == 0)
+		if ((this.enemyShipFormation.isEmpty() || this.gameState.getLivesRemaining() == 0)
 				&& !this.levelFinished) {
 			this.levelFinished = true;
 			this.screenFinishedCooldown.reset();
 		}
 
-		if (this.levelFinished && this.screenFinishedCooldown.checkFinished())
-			this.isRunning = false;
+		// If this level is over start the next level
+		if (this.levelFinished && this.screenFinishedCooldown.checkFinished()) {
+			// One extra life every few levels.
+			this.bonusLife = this.gameState.getLevel()
+					% EXTRA_LIFE_FRECUENCY == 0
+					&& this.gameState.getLivesRemaining() < Constants.MAX_LIVES;
 
+			// Move on to the next level
+			this.gameState.setLevel(this.gameState.getLevel() + 1);
+
+			// Reset this screen
+			this.initialize();
+
+			// Update the score
+			int newScore = this.gameState.getScore() + LIFE_SCORE * (this.gameState.getLivesRemaining() - 1);
+			this.gameState.setScore(newScore);
+
+
+			this.logger.info("Screen cleared with a score of " + this.gameState.getScore());
+
+			// If the player doenst have anymore lives or they beat the last level, stop running the game screen
+			if(this.gameState.getLivesRemaining() <= 0 || this.gameState.getLevel()>= this.levelSettings.size())
+				this.isRunning = false;
+		}
 	}
 
 	/**
@@ -233,8 +242,8 @@ public class GameScreen extends Screen {
 					bullet.getPositionY());
 
 		// Interface.
-		drawManager.drawScore(this, this.score);
-		drawManager.drawLives(this, this.lives);
+		drawManager.drawScore(this, this.gameState.getScore());
+		drawManager.drawLives(this, this.gameState.getLivesRemaining());
 		drawManager.drawHorizontalLine(this, SEPARATION_LINE_HEIGHT - 1);
 
 		// Countdown to game start.
@@ -242,7 +251,7 @@ public class GameScreen extends Screen {
 			int countdown = (int) ((INPUT_DELAY
 					- (System.currentTimeMillis()
 							- this.gameStartTime)) / 1000);
-			drawManager.drawCountDown(this, this.level, countdown,
+			drawManager.drawCountDown(this, this.gameState.getLevel(), countdown,
 					this.bonusLife);
 			drawManager.drawHorizontalLine(this, this.height / 2 - this.height
 					/ 12);
@@ -279,8 +288,8 @@ public class GameScreen extends Screen {
 					recyclable.add(bullet);
 					if (!this.ship.isDestroyed()) {
 						this.ship.destroy();
-						this.lives--;
-						this.logger.info("Hit on player ship, " + this.lives
+						this.gameState.setLivesRemaining(this.gameState.getLivesRemaining() - 1);
+						this.logger.info("Hit on player ship, " + this.gameState.getLivesRemaining()
 								+ " lives remaining.");
 					}
 				}
@@ -288,16 +297,16 @@ public class GameScreen extends Screen {
 				for (EnemyShip enemyShip : this.enemyShipFormation)
 					if (!enemyShip.isDestroyed()
 							&& checkCollision(bullet, enemyShip)) {
-						this.score += enemyShip.getPointValue();
-						this.shipsDestroyed++;
+						this.gameState.setScore(this.gameState.getScore() + enemyShip.getPointValue());
+						this.gameState.setShipsDestroyed(this.gameState.getShipsDestroyed() + 1);
 						this.enemyShipFormation.destroy(enemyShip);
 						recyclable.add(bullet);
 					}
 				if (this.enemyShipSpecial != null
 						&& !this.enemyShipSpecial.isDestroyed()
 						&& checkCollision(bullet, this.enemyShipSpecial)) {
-					this.score += this.enemyShipSpecial.getPointValue();
-					this.shipsDestroyed++;
+					this.gameState.setScore(this.gameState.getScore() + this.enemyShipSpecial.getPointValue());
+					this.gameState.setShipsDestroyed(this.gameState.getShipsDestroyed() + 1);
 					this.enemyShipSpecial.destroy();
 					this.enemyShipSpecialExplosionCooldown.reset();
 					recyclable.add(bullet);
@@ -330,15 +339,5 @@ public class GameScreen extends Screen {
 		int distanceY = Math.abs(centerAY - centerBY);
 
 		return distanceX < maxDistanceX && distanceY < maxDistanceY;
-	}
-
-	/**
-	 * Returns a GameState object representing the status of the game.
-	 * 
-	 * @return Current game state.
-	 */
-	public final GameState getGameState() {
-		return new GameState(this.level, this.score, this.lives,
-				this.bulletsShot, this.shipsDestroyed);
 	}
 }

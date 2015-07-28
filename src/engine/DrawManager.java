@@ -82,8 +82,8 @@ public final class DrawManager {
 	 * Private constructor.
 	 */
 	private DrawManager() {
-		fileManager = Core.getFileManager();
-		logger = Core.getLogger();
+		fileManager = Main.getFileManager();
+		logger = Main.getLogger();
 		logger.info("Started loading resources.");
 
 		try {

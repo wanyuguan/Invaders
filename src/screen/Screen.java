@@ -55,10 +55,10 @@ public abstract class Screen {
 		this.height = height;
 		this.fps = fps;
 
-		this.drawManager = Core.getDrawManager();
-		this.inputManager = Core.getInputManager();
-		this.logger = Core.getLogger();
-		this.inputDelay = Core.getCooldown(INPUT_DELAY);
+		this.drawManager = Main.getDrawManager();
+		this.inputManager = Main.getInputManager();
+		this.logger = Main.getLogger();
+		this.inputDelay = Main.getCooldown(INPUT_DELAY);
 		this.inputDelay.reset();
 		this.nextScreen = ScreenType.EndGame;
 	}

@@ -46,16 +46,25 @@ public class GameState {
 	/**
 	 * @return the level
 	 */
-	public final int getLevel() {
-		return level;
-	}
+	public final int getLevel() {return level; }
+
+	/**
+	 * Sets a new level
+	 * @param newLevel
+	 */
+	public final void setLevel(int newLevel) { this.level = newLevel; }
 
 	/**
 	 * @return the score
 	 */
-	public final int getScore() {
-		return score;
-	}
+	public final int getScore() { return score;	}
+
+	/**
+	 * Sets a new score
+	 * @param newScore
+	 * @return
+	 */
+	public final void setScore(int newScore) { this.score = newScore; }
 
 	/**
 	 * @return the livesRemaining
@@ -65,11 +74,21 @@ public class GameState {
 	}
 
 	/**
+	 * Set new lives remaining
+	 * @param newLivesRemaining
+	 */
+	public final void setLivesRemaining(int newLivesRemaining) { this.livesRemaining = newLivesRemaining; }
+
+	/**
 	 * @return the bulletsShot
 	 */
-	public final int getBulletsShot() {
-		return bulletsShot;
-	}
+	public final int getBulletsShot() { return bulletsShot; }
+
+	/**
+	 * Set bullets shot
+	 * @param bulletsShot
+	 */
+	public void setBulletsShot(int bulletsShot) { this.bulletsShot = bulletsShot; }
 
 	/**
 	 * @return the shipsDestroyed
@@ -77,5 +96,11 @@ public class GameState {
 	public final int getShipsDestroyed() {
 		return shipsDestroyed;
 	}
+
+	/**
+	 * Set ships destroyed
+	 * @param shipsDestroyed
+	 */
+	public void setShipsDestroyed(int shipsDestroyed) { this.shipsDestroyed = shipsDestroyed; }
 
 }

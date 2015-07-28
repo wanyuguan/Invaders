@@ -3,7 +3,7 @@ package entity;
 import java.awt.Color;
 
 import engine.Cooldown;
-import engine.Core;
+import engine.Main;
 import engine.DrawManager.SpriteType;
 
 /**
@@ -45,7 +45,7 @@ public class EnemyShip extends Entity {
 		super(positionX, positionY, 12 * 2, 8 * 2, Color.WHITE);
 
 		this.spriteType = spriteType;
-		this.animationCooldown = Core.getCooldown(500);
+		this.animationCooldown = Main.getCooldown(500);
 		this.isDestroyed = false;
 
 		switch (this.spriteType) {

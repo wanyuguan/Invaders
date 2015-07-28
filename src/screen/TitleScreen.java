@@ -3,7 +3,7 @@ package screen;
 import java.awt.event.KeyEvent;
 
 import engine.Cooldown;
-import engine.Core;
+import engine.Main;
 import engine.ScreenType;
 
 /**
@@ -35,7 +35,7 @@ public class TitleScreen extends Screen {
 
 		// Defaults to play.
 		this.nextScreen = ScreenType.GameScreen;
-		this.selectionCooldown = Core.getCooldown(SELECTION_TIME);
+		this.selectionCooldown = Main.getCooldown(SELECTION_TIME);
 		this.selectionCooldown.reset();
 	}
 

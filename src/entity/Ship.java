@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Set;
 
 import engine.Cooldown;
-import engine.Core;
+import engine.Main;
 import engine.DrawManager.SpriteType;
 
 /**
@@ -39,8 +39,8 @@ public class Ship extends Entity {
 		super(positionX, positionY, 13 * 2, 8 * 2, Color.GREEN);
 
 		this.spriteType = SpriteType.Ship;
-		this.shootingCooldown = Core.getCooldown(SHOOTING_INTERVAL);
-		this.destructionCooldown = Core.getCooldown(1000);
+		this.shootingCooldown = Main.getCooldown(SHOOTING_INTERVAL);
+		this.destructionCooldown = Main.getCooldown(1000);
 	}
 
 	/**

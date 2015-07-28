@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 import screen.Screen;
 import engine.Cooldown;
-import engine.Core;
+import engine.Main;
 import engine.DrawManager;
 import engine.DrawManager.SpriteType;
 import engine.GameSettings;
@@ -112,8 +112,8 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 *            Current game settings.
 	 */
 	public EnemyShipFormation(final GameSettings gameSettings) {
-		this.drawManager = Core.getDrawManager();
-		this.logger = Core.getLogger();
+		this.drawManager = Main.getDrawManager();
+		this.logger = Main.getLogger();
 		this.enemyShips = new ArrayList<List<EnemyShip>>();
 		this.currentDirection = Direction.RIGHT;
 		this.movementInterval = 0;
@@ -191,7 +191,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 */
 	public final void update() {
 		if(this.shootingCooldown == null) {
-			this.shootingCooldown = Core.getVariableCooldown(shootingInterval,
+			this.shootingCooldown = Main.getVariableCooldown(shootingInterval,
 					shootingVariance);
 			this.shootingCooldown.reset();
 		}

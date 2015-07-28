@@ -66,11 +66,11 @@ public class ScoreScreen extends Screen {
 		this.isNewRecord = false;
 		this.name = "AAA".toCharArray();
 		this.nameCharSelected = 0;
-		this.selectionCooldown = Core.getCooldown(SELECTION_TIME);
+		this.selectionCooldown = Main.getCooldown(SELECTION_TIME);
 		this.selectionCooldown.reset();
 
 		try {
-			this.highScores = Core.getFileManager().loadHighScores();
+			this.highScores = Main.getFileManager().loadHighScores();
 			if (highScores.size() < MAX_HIGH_SCORE_NUM
 					|| highScores.get(highScores.size() - 1).getScore()
 					< this.score)
@@ -93,7 +93,7 @@ public class ScoreScreen extends Screen {
 	 * @return Next screen code.
 	 */
 	public final ScreenType run() {
-		Core.getLogger().info("Score info: "
+		Main.getLogger().info("Score info: "
 				+ this.score + ", "
 				+ this.livesRemaining + " lives remaining, "
 				+ this.bulletsShot + " bullets shot and "
@@ -166,7 +166,7 @@ public class ScoreScreen extends Screen {
 			highScores.remove(highScores.size() - 1);
 
 		try {
-			Core.getFileManager().saveHighScores(highScores);
+			Main.getFileManager().saveHighScores(highScores);
 		} catch (IOException e) {
 			logger.warning("Couldn't load high scores!");
 		}

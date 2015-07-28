@@ -43,7 +43,7 @@ public class Frame extends JFrame {
 		this.height = height - insets.top + insets.bottom;
 		setTitle("Invaders");
 
-		addKeyListener(Core.getInputManager());
+		addKeyListener(Main.getInputManager());
 	}
 
 	/**
@@ -54,14 +54,14 @@ public class Frame extends JFrame {
 	 * @return Return code of the finished screen.
 	 */
 	public final ScreenType setScreen(final Screen screen) {
-		Core.getLogger().info("Starting " + screen.getScreenType() + " " + Core.WIDTH + "x" + Core.HEIGHT +
-				 " at " + Core.FPS + " fps.");
+		Main.getLogger().info("Starting " + screen.getScreenType() + " " + Main.WIDTH + "x" + Main.HEIGHT +
+				 " at " + Main.FPS + " fps.");
 
 		currentScreen = screen;
 		currentScreen.initialize();
 		ScreenType nextScreen = currentScreen.run();
 
-		Core.getLogger().info("Closing " + screen.getScreenType() + ".");
+		Main.getLogger().info("Closing " + screen.getScreenType() + ".");
 
 		return nextScreen;
 	}
