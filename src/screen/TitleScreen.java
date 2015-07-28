@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 
 import engine.Cooldown;
 import engine.Core;
+import engine.ScreenType;
 
 /**
  * Implements the title screen.
@@ -33,7 +34,7 @@ public class TitleScreen extends Screen {
 		super(width, height, fps);
 
 		// Defaults to play.
-		this.returnCode = 2;
+		this.nextScreen = ScreenType.GameScreen;
 		this.selectionCooldown = Core.getCooldown(SELECTION_TIME);
 		this.selectionCooldown.reset();
 	}
@@ -43,10 +44,10 @@ public class TitleScreen extends Screen {
 	 * 
 	 * @return Next screen code.
 	 */
-	public final int run() {
+	public final ScreenType run() {
 		super.run();
 
-		return this.returnCode;
+		return this.nextScreen;
 	}
 
 	/**
@@ -77,24 +78,24 @@ public class TitleScreen extends Screen {
 	 * Shifts the focus to the next menu item.
 	 */
 	private void nextMenuItem() {
-		if (this.returnCode == 3)
-			this.returnCode = 0;
-		else if (this.returnCode == 0)
-			this.returnCode = 2;
+		if (this.nextScreen == ScreenType.HighScroreScreen)
+			this.nextScreen = ScreenType.EndGame;
+		else if (this.nextScreen == ScreenType.EndGame)
+			this.nextScreen = ScreenType.GameScreen;
 		else
-			this.returnCode++;
+			this.nextScreen = ScreenType.HighScroreScreen;
 	}
 
 	/**
 	 * Shifts the focus to the previous menu item.
 	 */
 	private void previousMenuItem() {
-		if (this.returnCode == 0)
-			this.returnCode = 3;
-		else if (this.returnCode == 2)
-			this.returnCode = 0;
+		if (this.nextScreen == ScreenType.EndGame)
+			this.nextScreen = ScreenType.HighScroreScreen;
+		else if (this.nextScreen == ScreenType.GameScreen)
+			this.nextScreen = ScreenType.EndGame;
 		else
-			this.returnCode--;
+			this.nextScreen = ScreenType.GameScreen;
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class TitleScreen extends Screen {
 		drawManager.initDrawing(this);
 
 		drawManager.drawTitle(this);
-		drawManager.drawMenu(this, this.returnCode);
+		drawManager.drawMenu(this, this.nextScreen);
 
 		drawManager.completeDrawing(this);
 	}

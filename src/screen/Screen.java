@@ -4,10 +4,7 @@ import java.awt.Insets;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import engine.Cooldown;
-import engine.Core;
-import engine.DrawManager;
-import engine.InputManager;
+import engine.*;
 
 /**
  * Implements a generic screen.
@@ -41,7 +38,7 @@ public class Screen {
 	/** If the screen is running. */
 	protected boolean isRunning;
 	/** What kind of screen goes next. */
-	protected int returnCode;
+	protected ScreenType nextScreen;
 
 	/**
 	 * Constructor, establishes the properties of the screen.
@@ -63,7 +60,7 @@ public class Screen {
 		this.logger = Core.getLogger();
 		this.inputDelay = Core.getCooldown(INPUT_DELAY);
 		this.inputDelay.reset();
-		this.returnCode = 0;
+		this.nextScreen = ScreenType.EndGame;
 	}
 
 	/**
@@ -78,7 +75,7 @@ public class Screen {
 	 * 
 	 * @return Next screen code.
 	 */
-	public int run() {
+	public ScreenType run() {
 		this.isRunning = true;
 
 		while (this.isRunning) {
@@ -91,12 +88,12 @@ public class Screen {
 				try {
 					TimeUnit.MILLISECONDS.sleep(time);
 				} catch (InterruptedException e) {
-					return 0;
+					return ScreenType.EndGame;
 				}
 			}
 		}
 
-		return 0;
+		return ScreenType.EndGame;
 	}
 
 	/**

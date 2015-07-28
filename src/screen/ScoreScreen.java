@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import engine.Cooldown;
-import engine.Core;
-import engine.GameState;
-import engine.Score;
+import engine.*;
 
 /**
  * Implements the score screen.
@@ -89,10 +86,10 @@ public class ScoreScreen extends Screen {
 	 * 
 	 * @return Next screen code.
 	 */
-	public final int run() {
+	public final ScreenType run() {
 		super.run();
 
-		return this.returnCode;
+		return this.nextScreen;
 	}
 
 	/**
@@ -105,13 +102,13 @@ public class ScoreScreen extends Screen {
 		if (this.inputDelay.checkFinished()) {
 			if (inputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
 				// Return to main menu.
-				this.returnCode = 1;
+				this.nextScreen = ScreenType.TitleScreen;
 				this.isRunning = false;
 				if (this.isNewRecord)
 					saveScore();
 			} else if (inputManager.isKeyDown(KeyEvent.VK_SPACE)) {
 				// Play again.
-				this.returnCode = 2;
+				this.nextScreen = ScreenType.GameScreen;
 				this.isRunning = false;
 				if (this.isNewRecord)
 					saveScore();

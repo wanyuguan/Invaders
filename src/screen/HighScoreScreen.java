@@ -6,6 +6,7 @@ import java.util.List;
 
 import engine.Core;
 import engine.Score;
+import engine.ScreenType;
 
 /**
  * Implements the high scores screen, it shows player records.
@@ -31,7 +32,7 @@ public class HighScoreScreen extends Screen {
 	public HighScoreScreen(final int width, final int height, final int fps) {
 		super(width, height, fps);
 
-		this.returnCode = 1;
+		this.nextScreen = ScreenType.TitleScreen;
 
 		try {
 			this.highScores = Core.getFileManager().loadHighScores();
@@ -45,10 +46,10 @@ public class HighScoreScreen extends Screen {
 	 * 
 	 * @return Next screen code.
 	 */
-	public final int run() {
+	public final ScreenType run() {
 		super.run();
 
-		return this.returnCode;
+		return this.nextScreen;
 	}
 
 	/**

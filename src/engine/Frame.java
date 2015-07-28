@@ -2,7 +2,7 @@ package engine;
 
 import java.awt.Insets;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import screen.Screen;
 
@@ -33,7 +33,7 @@ public class Frame extends JFrame {
 	public Frame(final int width, final int height) {
 		setSize(width, height);
 		setResizable(false);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -53,7 +53,7 @@ public class Frame extends JFrame {
 	 *            Screen to show.
 	 * @return Return code of the finished screen.
 	 */
-	public final int setScreen(final Screen screen) {
+	public final ScreenType setScreen(final Screen screen) {
 		currentScreen = screen;
 		currentScreen.initialize();
 		return currentScreen.run();

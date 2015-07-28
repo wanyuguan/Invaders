@@ -114,20 +114,22 @@ public final class Core {
 		
 		GameState gameState;
 
-		int returnCode = 1;
+		// Start at the title screen
+		ScreenType nextScreen = ScreenType.TitleScreen;
+		
 		do {
 			gameState = new GameState(1, 0, MAX_LIVES, 0, 0);
 
-			switch (returnCode) {
-			case 1:
+			switch (nextScreen) {
+			case TitleScreen:
 				// Main menu.
 				currentScreen = new TitleScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 						+ " title screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				nextScreen = frame.setScreen(currentScreen);
 				LOGGER.info("Closing title screen.");
 				break;
-			case 2:
+			case GameScreen:
 				// Game & score.
 				do {
 					// One extra live every few levels.
@@ -161,22 +163,22 @@ public final class Core {
 						+ gameState.getBulletsShot() + " bullets shot and "
 						+ gameState.getShipsDestroyed() + " ships destroyed.");
 				currentScreen = new ScoreScreen(width, height, FPS, gameState);
-				returnCode = frame.setScreen(currentScreen);
+				nextScreen = frame.setScreen(currentScreen);
 				LOGGER.info("Closing score screen.");
 				break;
-			case 3:
+			case HighScroreScreen:
 				// High scores.
 				currentScreen = new HighScoreScreen(width, height, FPS);
 				LOGGER.info("Starting " + WIDTH + "x" + HEIGHT
 						+ " high score screen at " + FPS + " fps.");
-				returnCode = frame.setScreen(currentScreen);
+				nextScreen = frame.setScreen(currentScreen);
 				LOGGER.info("Closing high score screen.");
 				break;
 			default:
 				break;
 			}
 
-		} while (returnCode != 0);
+		} while (nextScreen != ScreenType.EndGame);
 
 		fileHandler.flush();
 		fileHandler.close();
