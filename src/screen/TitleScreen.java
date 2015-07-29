@@ -60,12 +60,12 @@ public class TitleScreen extends Screen {
 				&& this.inputDelay.checkFinished()) {
 			if (inputManager.isKeyDown(KeyEvent.VK_UP)
 					|| inputManager.isKeyDown(KeyEvent.VK_W)) {
-				previousMenuItem();
+				this.nextScreenTpe = previousMenuItem();
 				this.selectionCooldown.reset();
 			}
 			if (inputManager.isKeyDown(KeyEvent.VK_DOWN)
 					|| inputManager.isKeyDown(KeyEvent.VK_S)) {
-				nextMenuItem();
+				this.nextScreenTpe = nextMenuItem();
 				this.selectionCooldown.reset();
 			}
 			if (inputManager.isSpaceKeyDown())
@@ -76,25 +76,25 @@ public class TitleScreen extends Screen {
 	/**
 	 * Shifts the focus to the next menu item.
 	 */
-	private void nextMenuItem() {
+	private ScreenType nextMenuItem() {
 		if (this.nextScreenTpe == ScreenType.HighScroreScreen)
-			this.nextScreenTpe = ScreenType.EndGame;
+			return ScreenType.EndGame;
 		else if (this.nextScreenTpe == ScreenType.EndGame)
-			this.nextScreenTpe = ScreenType.GameScreen;
+			return ScreenType.GameScreen;
 		else
-			this.nextScreenTpe = ScreenType.HighScroreScreen;
+			return ScreenType.HighScroreScreen;
 	}
 
 	/**
 	 * Shifts the focus to the previous menu item.
 	 */
-	private void previousMenuItem() {
+	private ScreenType previousMenuItem() {
 		if (this.nextScreenTpe == ScreenType.EndGame)
-			this.nextScreenTpe = ScreenType.HighScroreScreen;
+			return ScreenType.HighScroreScreen;
 		else if (this.nextScreenTpe == ScreenType.GameScreen)
-			this.nextScreenTpe = ScreenType.EndGame;
+			return ScreenType.EndGame;
 		else
-			this.nextScreenTpe = ScreenType.GameScreen;
+			return ScreenType.GameScreen;
 	}
 
 	/**
