@@ -198,12 +198,6 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		// and retrieve each row. Then, once we have a row
 		// we need to loop over that row and draw each ship
 		EnemyShip[][] enemyShips = getEnemyShipsToDraw();
-		for(int columnIndex = 0; columnIndex < enemyShips.length; columnIndex++) {
-			EnemyShip[] column = enemyShips[columnIndex];
-			for(int rowIndex = 0; rowIndex < column.length; rowIndex++) {
-				drawManager.drawEntity(column[rowIndex]);
-			}
-		}
 	}
 
 	/**
