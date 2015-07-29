@@ -186,6 +186,8 @@ public class GameScreen extends Screen {
 				this.bonusLife = this.gameState.getLevel()
 						% EXTRA_LIFE_FRECUENCY == 0
 						&& this.gameState.getLivesRemaining() < Constants.MAX_LIVES;
+				if(bonusLife)
+					this.gameState.setLivesRemaining(this.gameState.getLivesRemaining() + 1);
 
 				// Move on to the next level
 				this.gameState.setLevel(this.gameState.getLevel() + 1);
