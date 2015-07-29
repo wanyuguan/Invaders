@@ -111,7 +111,7 @@ public class ScoreScreen extends Screen {
 				this.isRunning = false;
 				if (this.isNewRecord)
 					saveScore();
-			} else if (inputManager.isKeyDown(KeyEvent.VK_SPACE)) {
+			} else if (inputManager.isSpaceKeyDown()) {
 				// Play again.
 				this.nextScreen = ScreenType.GameScreen;
 				this.isRunning = false;

@@ -48,6 +48,30 @@ public final class InputManager implements KeyListener {
 	}
 
 	/**
+	 * Returns true if one of the right keys (-> or D) is down
+	 * @return Key state
+	 */
+	public boolean isRightKeyDown() {
+		return isKeyDown(KeyEvent.VK_RIGHT) || isKeyDown(KeyEvent.VK_D);
+	}
+
+	/**
+	 * Returns true if one of the left keys (<- or A) is down
+	 * @return Key state
+	 */
+	public boolean isLeftKeyDown() {
+		return isKeyDown(KeyEvent.VK_LEFT) || isKeyDown(KeyEvent.VK_A);
+	}
+
+	/**
+	 * Returns true if the space key is down
+	 * @return Key state
+	 */
+	public boolean isSpaceKeyDown() {
+		return isKeyDown(KeyEvent.VK_SPACE);
+	}
+
+	/**
 	 * Changes the state of the key to pressed.
 	 * 
 	 * @param key
