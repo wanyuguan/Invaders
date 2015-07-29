@@ -70,22 +70,14 @@ public class GameScreen extends Screen {
 	 * @param gameState
 	 *            Current game state.
 	 * @param levelSettings
-	 *            Current game settings.
-	 * @param width
-	 *            Screen width.
-	 * @param height
-	 *            Screen height.
-	 * @param fps
-	 *            Frames per second, frame rate at which the game is run.
 	 */
-	public GameScreen(final GameState gameState,
-			final List<GameSettings> levelSettings,
-			final int width, final int height, final int fps) {
-		super(width, height, fps);
+	public GameScreen(final GameState gameState, final List<GameSettings> levelSettings) {
+		super();
 
 		this.gameState = gameState;
 		this.levelSettings = levelSettings;
 		this.bonusLife = false;
+		this.nextScreen = ScreenType.ScoreScreen;
 	}
 
 	/**
@@ -102,7 +94,7 @@ public class GameScreen extends Screen {
 
 		enemyShipFormation = new EnemyShipFormation(this.levelSettings.get(this.gameState.getLevel()- 1));
 		enemyShipFormation.attach(this);
-		this.ship = new Ship(this.width / 2, this.height - 30);
+		this.ship = new Ship(this.getWidth() / 2, this.getHeight() - 30);
 		// Appears each 10-30 seconds.
 		this.enemyShipSpecialCooldown = Main.getVariableCooldown(
 				BONUS_SHIP_INTERVAL, BONUS_SHIP_VARIANCE);
@@ -147,7 +139,7 @@ public class GameScreen extends Screen {
 						|| inputManager.isKeyDown(KeyEvent.VK_A);
 
 				boolean isRightBorder = this.ship.getPositionX()
-						+ this.ship.getWidth() + this.ship.getSpeed() > this.width - 1;
+						+ this.ship.getWidth() + this.ship.getSpeed() > this.getWidth() - 1;
 				boolean isLeftBorder = this.ship.getPositionX()
 						- this.ship.getSpeed() < 1;
 
@@ -176,7 +168,7 @@ public class GameScreen extends Screen {
 				this.logger.info("A special ship appears");
 			}
 			if (this.enemyShipSpecial != null
-					&& this.enemyShipSpecial.getPositionX() > this.width) {
+					&& this.enemyShipSpecial.getPositionX() > this.getWidth()) {
 				this.enemyShipSpecial = null;
 				this.logger.info("The special ship has escaped");
 			}
@@ -198,27 +190,28 @@ public class GameScreen extends Screen {
 
 		// If this level is over start the next level
 		if (this.levelFinished && this.screenFinishedCooldown.checkFinished()) {
-			// One extra life every few levels.
-			this.bonusLife = this.gameState.getLevel()
-					% EXTRA_LIFE_FRECUENCY == 0
-					&& this.gameState.getLivesRemaining() < Constants.MAX_LIVES;
-
-			// Move on to the next level
-			this.gameState.setLevel(this.gameState.getLevel() + 1);
-
-			// Reset this screen
-			this.initialize();
-
-			// Update the score
-			int newScore = this.gameState.getScore() + LIFE_SCORE * (this.gameState.getLivesRemaining() - 1);
-			this.gameState.setScore(newScore);
-
-
-			this.logger.info("Screen cleared with a score of " + this.gameState.getScore());
-
 			// If the player doenst have anymore lives or they beat the last level, stop running the game screen
 			if(this.gameState.getLivesRemaining() <= 0 || this.gameState.getLevel()>= this.levelSettings.size())
 				this.isRunning = false;
+			// Move on to the next level
+			else {
+				// One extra life every few levels.
+				this.bonusLife = this.gameState.getLevel()
+						% EXTRA_LIFE_FRECUENCY == 0
+						&& this.gameState.getLivesRemaining() < Constants.MAX_LIVES;
+
+				// Move on to the next level
+				this.gameState.setLevel(this.gameState.getLevel() + 1);
+
+				// Reset this screen
+				this.initialize();
+
+				// Update the score
+				int newScore = this.gameState.getScore() + LIFE_SCORE * (this.gameState.getLivesRemaining() - 1);
+				this.gameState.setScore(newScore);
+			}
+
+			this.logger.info("Screen cleared with a score of " + this.gameState.getScore());
 		}
 	}
 
@@ -253,9 +246,9 @@ public class GameScreen extends Screen {
 							- this.gameStartTime)) / 1000);
 			drawManager.drawCountDown(this, this.gameState.getLevel(), countdown,
 					this.bonusLife);
-			drawManager.drawHorizontalLine(this, this.height / 2 - this.height
+			drawManager.drawHorizontalLine(this, this.getHeight() / 2 - this.getHeight()
 					/ 12);
-			drawManager.drawHorizontalLine(this, this.height / 2 + this.height
+			drawManager.drawHorizontalLine(this, this.getHeight() / 2 + this.getHeight()
 					/ 12);
 		}
 
@@ -270,7 +263,7 @@ public class GameScreen extends Screen {
 		for (Bullet bullet : this.bullets) {
 			bullet.update();
 			if (bullet.getPositionY() < SEPARATION_LINE_HEIGHT
-					|| bullet.getPositionY() > this.height)
+					|| bullet.getPositionY() > this.getHeight())
 				recyclable.add(bullet);
 		}
 		this.bullets.removeAll(recyclable);

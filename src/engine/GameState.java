@@ -8,6 +8,17 @@ package engine;
  */
 public class GameState {
 
+	/** Initial level **/
+	private int initialLevel;
+	/** Initial score **/
+	private int initialScore;
+	/** Initial livesRemaining **/
+	private int initialLivesRemaining;
+	/** initialBulletsShot **/
+	private int initialBulletsShot;
+	/** initial ships destroyed **/
+	private int initialShipsDestroyed;
+
 	/** Current game level. */
 	private int level;
 	/** Current score. */
@@ -36,11 +47,22 @@ public class GameState {
 	public GameState(final int level, final int score,
 			final int livesRemaining, final int bulletsShot,
 			final int shipsDestroyed) {
-		this.level = level;
-		this.score = score;
-		this.livesRemaining = livesRemaining;
-		this.bulletsShot = bulletsShot;
-		this.shipsDestroyed = shipsDestroyed;
+		this.level = this.initialLevel = level;
+		this.score = this.initialScore = score;
+		this.livesRemaining = this.initialLivesRemaining = livesRemaining;
+		this.bulletsShot = this.initialBulletsShot = bulletsShot;
+		this.shipsDestroyed = this.initialShipsDestroyed = shipsDestroyed;
+	}
+
+	/**
+	 * Reset the game state
+	 */
+	public void reset() {
+		this.level = this.initialLevel;
+		this.score = this.initialScore;
+		this.livesRemaining = this.initialLivesRemaining;
+		this.bulletsShot = this.initialBulletsShot;
+		this.shipsDestroyed = this.initialShipsDestroyed;
 	}
 
 	/**

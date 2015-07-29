@@ -28,7 +28,7 @@ public final class Main {
 	public static final int FPS = 60;
 
 	/** Frame to draw the screen on. */
-	private static Frame frame;
+	private static Frame Frame;
 	/** Application logger. */
 	private static final Logger LOGGER = Logger.getLogger(Main.class
 			.getSimpleName());
@@ -63,11 +63,16 @@ public final class Main {
 			e.printStackTrace();
 		}
 
-		frame = new Frame(WIDTH, HEIGHT);
-		DrawManager.getInstance().setFrame(frame);
+		Frame = new Frame(WIDTH, HEIGHT);
+		DrawManager.getInstance().setFrame(Frame);
 
 		// Run the game
-		Invaders.run(frame);
+		try {
+			Invaders.run();
+		}catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "An error was thrown while the game was running: " + e.getMessage());
+		}
 
 		fileHandler.flush();
 		fileHandler.close();
@@ -140,5 +145,13 @@ public final class Main {
 	public static Cooldown getVariableCooldown(final int milliseconds,
 			final int variance) {
 		return new Cooldown(milliseconds, variance);
+	}
+
+	/**
+	 * Gets the main frame
+	 * @return The main frame
+	 */
+	public static Frame getFrame() {
+		return Frame;
 	}
 }

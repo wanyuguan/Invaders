@@ -12,16 +12,13 @@ public class Invaders {
     /**
      * Start running the game
      */
-    public static void run(Frame frame) {
-        // Get the size of the frame
-        int width = frame.getWidth();
-        int height = frame.getHeight();
+    public static void run() {
 
         // Get a list of levels to play
         List<GameSettings> levelSettings = Levels.getLevels();
 
         // Hold on to all of the game's information
-        GameState gameState;
+        GameState gameState = new GameState(1, 0, Constants.MAX_LIVES, 0, 0);
 
         // The current screen
         // Empty by default
@@ -31,27 +28,26 @@ public class Invaders {
         ScreenType nextScreen = ScreenType.TitleScreen;
 
         while (nextScreen != ScreenType.EndGame) {
-            // Reset the game's state each time the game starts over
-            gameState = new GameState(1, 0, Constants.MAX_LIVES, 0, 0);
 
             if(nextScreen == ScreenType.TitleScreen) {
-                // Main menu.
-                currentScreen = new TitleScreen(width, height, Main.FPS);
-                nextScreen = frame.setScreen(currentScreen);
+                currentScreen = new TitleScreen();
             }
             else if (nextScreen == ScreenType.GameScreen) {
-                currentScreen = new GameScreen(gameState, levelSettings, width, height, Main.FPS);
-                frame.setScreen(currentScreen);
-
-                currentScreen = new ScoreScreen(width, height, Main.FPS, gameState);
-                nextScreen = frame.setScreen(currentScreen);
+                gameState.reset();
+                currentScreen = new GameScreen(gameState, levelSettings);
+            }
+            else if(nextScreen == ScreenType.ScoreScreen) {
+                currentScreen = new ScoreScreen(gameState);
             }
             else if (nextScreen == ScreenType.HighScroreScreen) {
-                // High scores.
-                currentScreen = new HighScoreScreen(width, height, Main.FPS);
-                nextScreen = frame.setScreen(currentScreen);
+                currentScreen = new HighScoreScreen();
+            }
+            else {
+                throw new IllegalStateException("Screen not found!");
             }
 
+            currentScreen.show();
+            nextScreen = currentScreen.getNextScreen();
         }
     }
 }

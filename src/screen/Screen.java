@@ -13,7 +13,7 @@ import engine.*;
  * 
  */
 public abstract class Screen {
-	
+
 	/** Milliseconds until the screen accepts user input. */
 	private static final int INPUT_DELAY = 1000;
 
@@ -23,13 +23,6 @@ public abstract class Screen {
 	protected InputManager inputManager;
 	/** Application logger. */
 	protected Logger logger;
-
-	/** Screen width. */
-	protected int width;
-	/** Screen height. */
-	protected int height;
-	/** Frames per second shown on the screen. */
-	protected int fps;
 	/** Screen insets. */
 	protected Insets insets;
 	/** Time until the screen accepts user input. */
@@ -42,19 +35,8 @@ public abstract class Screen {
 
 	/**
 	 * Constructor, establishes the properties of the screen.
-	 * 
-	 * @param width
-	 *            Screen width.
-	 * @param height
-	 *            Screen height.
-	 * @param fps
-	 *            Frames per second, frame rate at which the game is run.
 	 */
-	public Screen(final int width, final int height, final int fps) {
-		this.width = width;
-		this.height = height;
-		this.fps = fps;
-
+	public Screen() {
 		this.drawManager = Main.getDrawManager();
 		this.inputManager = Main.getInputManager();
 		this.logger = Main.getLogger();
@@ -77,6 +59,19 @@ public abstract class Screen {
 	}
 
 	/**
+	 * Show this screen
+	 */
+	public void show() {
+		Main.getFrame().setScreen(this);
+	}
+
+	/**
+	 * Get the next screen
+	 * @return The next screen
+	 */
+	public ScreenType getNextScreen() { return this.nextScreen;	}
+
+	/**
 	 * Activates the screen.
 	 * 
 	 * @return Next screen code.
@@ -89,7 +84,7 @@ public abstract class Screen {
 
 			update();
 
-			time = (1000 / this.fps) - (System.currentTimeMillis() - time);
+			time = (1000 / Main.FPS) - (System.currentTimeMillis() - time);
 			if (time > 0) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(time);
@@ -113,16 +108,12 @@ public abstract class Screen {
 	 * 
 	 * @return Screen width.
 	 */
-	public final int getWidth() {
-		return this.width;
-	}
+	public final int getWidth() { return Main.getFrame().getWidth(); }
 
 	/**
 	 * Getter for screen height.
 	 * 
 	 * @return Screen height.
 	 */
-	public final int getHeight() {
-		return this.height;
-	}
+	public final int getHeight() { return Main.getFrame().getHeight(); }
 }

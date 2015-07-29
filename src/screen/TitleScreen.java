@@ -22,16 +22,9 @@ public class TitleScreen extends Screen {
 
 	/**
 	 * Constructor, establishes the properties of the screen.
-	 * 
-	 * @param width
-	 *            Screen width.
-	 * @param height
-	 *            Screen height.
-	 * @param fps
-	 *            Frames per second, frame rate at which the game is run.
 	 */
-	public TitleScreen(final int width, final int height, final int fps) {
-		super(width, height, fps);
+	public TitleScreen() {
+		super();
 
 		// Defaults to play.
 		this.nextScreen = ScreenType.GameScreen;

@@ -45,19 +45,12 @@ public class ScoreScreen extends Screen {
 
 	/**
 	 * Constructor, establishes the properties of the screen.
-	 * 
-	 * @param width
-	 *            Screen width.
-	 * @param height
-	 *            Screen height.
-	 * @param fps
-	 *            Frames per second, frame rate at which the game is run.
+	 *
 	 * @param gameState
 	 *            Current game state.
 	 */
-	public ScoreScreen(final int width, final int height, final int fps,
-			final GameState gameState) {
-		super(width, height, fps);
+	public ScoreScreen(final GameState gameState) {
+		super();
 
 		this.score = gameState.getScore();
 		this.livesRemaining = gameState.getLivesRemaining();
