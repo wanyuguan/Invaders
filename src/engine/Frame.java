@@ -62,6 +62,7 @@ public class Frame extends JFrame {
 		ScreenType nextScreen = currentScreen.run();
 
 		Main.getLogger().info("Closing " + screen.getScreenType() + ".");
+		Main.getLogger().info("Next screen:  " + nextScreen + ".");
 
 		return nextScreen;
 	}
