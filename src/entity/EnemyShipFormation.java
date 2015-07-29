@@ -180,9 +180,30 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 * Draws every individual component of the formation.
 	 */
 	public final void draw() {
-		for (List<EnemyShip> column : this.enemyShips)
-			for (EnemyShip enemyShip : column)
-				drawManager.drawEntity(enemyShip);
+		// Enemy ships is a two dimensional array containing enemy ships.
+		// The first (outer) array is an array of rows.
+		// Each row is an array of ships.
+		// It looks something like this:
+		//
+		// [
+		// 		row 0: [ ship0	ship1	ship2	ship3	ship4 ...]
+		// 		row 1: [ ship0	ship1	ship2	ship3	ship4 ...]
+		// 		row 2: [ ship0	ship1	ship2	ship3	ship4 ...]
+		// 		row 3: [ ship0	ship1	ship2	ship3	ship4 ...]
+		// 		row 4: [ ship0	ship1	ship2	ship3	ship4 ...]
+		//		...
+		// ]
+		//
+		// To draw each ship we need to loop over the outer array
+		// and retrieve each row. Then, once we have a row
+		// we need to loop over that row and draw each ship
+		EnemyShip[][] enemyShips = getEnemyShipsToDraw();
+		for(int columnIndex = 0; columnIndex < enemyShips.length; columnIndex++) {
+			EnemyShip[] column = enemyShips[columnIndex];
+			for(int rowIndex = 0; rowIndex < column.length; rowIndex++) {
+				drawManager.drawEntity(column[rowIndex]);
+			}
+		}
 	}
 
 	/**
@@ -424,5 +445,19 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 */
 	public final boolean isEmpty() {
 		return this.shipCount <= 0;
+	}
+
+	/**
+	 * Returns a two dimensional array of enemy ships to draw
+	 * @return Ships to draw
+	 */
+	private EnemyShip[][] getEnemyShipsToDraw() {
+		EnemyShip[][] columns = new EnemyShip[this.enemyShips.size()][];
+		for (int columnIndex = 0; columnIndex < this.enemyShips.size(); columnIndex++) {
+			columns[columnIndex] = new EnemyShip[this.enemyShips.get(columnIndex).size()];
+			this.enemyShips.get(columnIndex).toArray(columns[columnIndex]);
+		}
+
+		return columns;
 	}
 }
