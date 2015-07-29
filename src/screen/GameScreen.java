@@ -78,6 +78,9 @@ public class GameScreen extends Screen {
 		this.levelSettings = levelSettings;
 		this.bonusLife = false;
 		this.nextScreen = ScreenType.ScoreScreen;
+
+		// Make sure the game's state is reset
+		this.gameState.reset();
 	}
 
 	/**

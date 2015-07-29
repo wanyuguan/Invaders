@@ -33,7 +33,6 @@ public class Invaders {
                 currentScreen = new TitleScreen();
             }
             else if (nextScreen == ScreenType.GameScreen) {
-                gameState.reset();
                 currentScreen = new GameScreen(gameState, levelSettings);
             }
             else if(nextScreen == ScreenType.ScoreScreen) {
