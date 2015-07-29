@@ -10,6 +10,7 @@ You will need to install Java 7+ to run the game (see step 1 in the setup sectio
 
 # Prerequisites
 Students who use this repo are expected to have learned about the following programming concepts:
+
 1. Data types. For example, ```int```, ```double```, and ```String```
 2. Conditional branching: ```if```/```if else```/```else```
 2. Looping: ```while``` and ```for```
@@ -22,6 +23,7 @@ Before you get started make sure you are setup.
 
 ### Setup
 (Due to a time constraint I'm only going to include brief instructions here because my class is already [mostly] setup. I will include more detailed instructions later as other classes use this repo)
+
 1. Install Java 7+
 2. Install Git
 3. Install IntelliJ IDEAW (we used IntelliJ IDEA in my class. Feel free to use whatever environment that works best for you.)
