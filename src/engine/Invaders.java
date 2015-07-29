@@ -20,33 +20,7 @@ public class Invaders {
         // Hold on to all of the game's information
         GameState gameState = new GameState(1, 0, Constants.MAX_LIVES, 0, 0);
 
-        // The current screen
-        // Empty by default
-        Screen currentScreen;
-
-        // Start at the title screen
-        ScreenType nextScreen = ScreenType.TitleScreen;
-
-        while (nextScreen != ScreenType.EndGame) {
-
-            if(nextScreen == ScreenType.TitleScreen) {
-                currentScreen = new TitleScreen();
-            }
-            else if (nextScreen == ScreenType.GameScreen) {
-                currentScreen = new GameScreen(gameState, levelSettings);
-            }
-            else if(nextScreen == ScreenType.ScoreScreen) {
-                currentScreen = new ScoreScreen(gameState);
-            }
-            else if (nextScreen == ScreenType.HighScroreScreen) {
-                currentScreen = new HighScoreScreen();
-            }
-            else {
-                throw new IllegalStateException("Screen not found!");
-            }
-
-            currentScreen.show();
-            nextScreen = currentScreen.getNextScreenType();
-        }
+        Screen screen = new TitleScreen();
+        screen.show();
     }
 }
