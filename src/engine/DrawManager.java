@@ -176,6 +176,16 @@ public final class DrawManager {
 
 	/**
 	 * Draws an entity, using the apropiate image.
+	 *
+	 * @param entity
+	 *            Entity to be drawn.
+	 */
+	public void drawEntity(final Entity entity) {
+		drawEntity(entity, entity.getPositionX(), entity.getPositionY());
+	}
+
+	/**
+	 * Draws an entity, using the apropiate image.
 	 * 
 	 * @param entity
 	 *            Entity to be drawn.
