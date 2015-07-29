@@ -133,20 +133,9 @@ public class GameScreen extends Screen {
 		if (this.inputDelay.checkFinished() && !this.levelFinished) {
 
 			if (!this.ship.isDestroyed()) {
-				boolean moveRight = inputManager.isRightKeyDown();
-				boolean moveLeft = inputManager.isLeftKeyDown();
 
-				boolean isRightBorder = this.ship.getPositionX()
-						+ this.ship.getWidth() + this.ship.getSpeed() > this.getWidth() - 1;
-				boolean isLeftBorder = this.ship.getPositionX()
-						- this.ship.getSpeed() < 1;
+				this.ship.checkMovement(this);
 
-				if (moveRight && !isRightBorder) {
-					this.ship.moveRight();
-				}
-				if (moveLeft && !isLeftBorder) {
-					this.ship.moveLeft();
-				}
 				if (inputManager.isSpaceKeyDown())
 					if (this.ship.shoot(this.bullets))
 						this.gameState.setBulletsShot(this.gameState.getBulletsShot() + 1);

@@ -6,6 +6,7 @@ import java.util.Set;
 import engine.Cooldown;
 import engine.Main;
 import engine.DrawManager.SpriteType;
+import screen.Screen;
 
 /**
  * Implements a ship, to be controlled by the player.
@@ -44,12 +45,34 @@ public class Ship extends Entity {
 	}
 
 	/**
+	 * Checks the ship's movement.
+	 * Moves the ship if the right or left keys are pressed
+	 * and the player is not against the left or right wall.
+	 */
+	public void checkMovement(Screen screen) {
+		boolean moveRight = Main.getInputManager().isRightKeyDown();
+		boolean moveLeft = Main.getInputManager().isLeftKeyDown();
+
+		// Detects whether the ship is touching the right border
+		boolean isShipTouchingRightBorder = this.getPositionX() + this.getWidth() + this.getSpeed() > screen.getWidth() - 1;
+
+		// Detects whether the ship is touching the left border
+		boolean isShipTouchingLeftBorder = this.getPositionX() - this.getSpeed() < 1;
+
+		if (moveRight && !isShipTouchingRightBorder) {
+			this.moveRight();
+		}
+
+		if (moveLeft && !isShipTouchingLeftBorder) {
+			this.moveLeft();
+		}
+	}
+
+	/**
 	 * Moves the ship speed uni ts right, or until the right screen border is
 	 * reached.
 	 */
-	public final void moveRight() {
-		this.positionX += SPEED;
-	}
+	public final void moveRight() { this.positionX += SPEED; }
 
 	/**
 	 * Moves the ship speed units left, or until the left screen border is
