@@ -166,6 +166,7 @@ pip-log.txt
 ## IntelliJ
 #################
 out/
+.idea/
 
 
 #############
