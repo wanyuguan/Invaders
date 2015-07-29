@@ -94,7 +94,7 @@ public class ScoreScreen extends Screen {
 
 		super.run();
 
-		return this.nextScreen;
+		return this.nextScreenTpe;
 	}
 
 	/**
@@ -107,13 +107,13 @@ public class ScoreScreen extends Screen {
 		if (this.inputDelay.checkFinished()) {
 			if (inputManager.isKeyDown(KeyEvent.VK_ESCAPE)) {
 				// Return to main menu.
-				this.nextScreen = ScreenType.TitleScreen;
+				this.nextScreenTpe = ScreenType.TitleScreen;
 				this.isRunning = false;
 				if (this.isNewRecord)
 					saveScore();
 			} else if (inputManager.isSpaceKeyDown()) {
 				// Play again.
-				this.nextScreen = ScreenType.GameScreen;
+				this.nextScreenTpe = ScreenType.GameScreen;
 				this.isRunning = false;
 				if (this.isNewRecord)
 					saveScore();

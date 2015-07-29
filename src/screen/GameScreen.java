@@ -1,6 +1,5 @@
 package screen;
 
-import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -77,7 +76,7 @@ public class GameScreen extends Screen {
 		this.gameState = gameState;
 		this.levelSettings = levelSettings;
 		this.bonusLife = false;
-		this.nextScreen = ScreenType.ScoreScreen;
+		this.nextScreenTpe = ScreenType.ScoreScreen;
 
 		// Make sure the game's state is reset
 		this.gameState.reset();
@@ -124,7 +123,7 @@ public class GameScreen extends Screen {
 	 */
 	public final ScreenType run() {
 		super.run();
-		return this.nextScreen;
+		return this.nextScreenTpe;
 	}
 
 	/**

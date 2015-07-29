@@ -27,7 +27,7 @@ public class TitleScreen extends Screen {
 		super();
 
 		// Defaults to play.
-		this.nextScreen = ScreenType.GameScreen;
+		this.nextScreenTpe = ScreenType.GameScreen;
 		this.selectionCooldown = Main.getCooldown(SELECTION_TIME);
 		this.selectionCooldown.reset();
 	}
@@ -46,7 +46,7 @@ public class TitleScreen extends Screen {
 	public final ScreenType run() {
 		super.run();
 
-		return this.nextScreen;
+		return this.nextScreenTpe;
 	}
 
 	/**
@@ -77,24 +77,24 @@ public class TitleScreen extends Screen {
 	 * Shifts the focus to the next menu item.
 	 */
 	private void nextMenuItem() {
-		if (this.nextScreen == ScreenType.HighScroreScreen)
-			this.nextScreen = ScreenType.EndGame;
-		else if (this.nextScreen == ScreenType.EndGame)
-			this.nextScreen = ScreenType.GameScreen;
+		if (this.nextScreenTpe == ScreenType.HighScroreScreen)
+			this.nextScreenTpe = ScreenType.EndGame;
+		else if (this.nextScreenTpe == ScreenType.EndGame)
+			this.nextScreenTpe = ScreenType.GameScreen;
 		else
-			this.nextScreen = ScreenType.HighScroreScreen;
+			this.nextScreenTpe = ScreenType.HighScroreScreen;
 	}
 
 	/**
 	 * Shifts the focus to the previous menu item.
 	 */
 	private void previousMenuItem() {
-		if (this.nextScreen == ScreenType.EndGame)
-			this.nextScreen = ScreenType.HighScroreScreen;
-		else if (this.nextScreen == ScreenType.GameScreen)
-			this.nextScreen = ScreenType.EndGame;
+		if (this.nextScreenTpe == ScreenType.EndGame)
+			this.nextScreenTpe = ScreenType.HighScroreScreen;
+		else if (this.nextScreenTpe == ScreenType.GameScreen)
+			this.nextScreenTpe = ScreenType.EndGame;
 		else
-			this.nextScreen = ScreenType.GameScreen;
+			this.nextScreenTpe = ScreenType.GameScreen;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class TitleScreen extends Screen {
 		drawManager.initDrawing(this);
 
 		drawManager.drawTitle(this);
-		drawManager.drawMenu(this, this.nextScreen);
+		drawManager.drawMenu(this, this.nextScreenTpe);
 
 		drawManager.completeDrawing(this);
 	}

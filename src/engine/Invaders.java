@@ -46,7 +46,7 @@ public class Invaders {
             }
 
             currentScreen.show();
-            nextScreen = currentScreen.getNextScreen();
+            nextScreen = currentScreen.getNextScreenType();
         }
     }
 }

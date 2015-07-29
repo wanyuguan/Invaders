@@ -1,6 +1,5 @@
 package screen;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class HighScoreScreen extends Screen {
 	public HighScoreScreen() {
 		super();
 
-		this.nextScreen = ScreenType.TitleScreen;
+		this.nextScreenTpe = ScreenType.TitleScreen;
 
 		try {
 			this.highScores = Main.getFileManager().loadHighScores();
@@ -48,7 +47,7 @@ public class HighScoreScreen extends Screen {
 	public final ScreenType run() {
 		super.run();
 
-		return this.nextScreen;
+		return this.nextScreenTpe;
 	}
 
 	/**

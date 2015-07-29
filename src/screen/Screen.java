@@ -31,7 +31,7 @@ public abstract class Screen {
 	/** If the screen is running. */
 	protected boolean isRunning;
 	/** What kind of screen goes next. */
-	protected ScreenType nextScreen;
+	protected ScreenType nextScreenTpe;
 
 	/**
 	 * Constructor, establishes the properties of the screen.
@@ -42,7 +42,7 @@ public abstract class Screen {
 		this.logger = Main.getLogger();
 		this.inputDelay = Main.getCooldown(INPUT_DELAY);
 		this.inputDelay.reset();
-		this.nextScreen = ScreenType.EndGame;
+		this.nextScreenTpe = ScreenType.EndGame;
 	}
 
 	/**
@@ -69,7 +69,7 @@ public abstract class Screen {
 	 * Get the next screen
 	 * @return The next screen
 	 */
-	public ScreenType getNextScreen() { return this.nextScreen;	}
+	public ScreenType getNextScreenType() { return this.nextScreenTpe;	}
 
 	/**
 	 * Activates the screen.
