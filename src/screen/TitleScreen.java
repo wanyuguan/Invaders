@@ -80,12 +80,7 @@ public class TitleScreen extends Screen {
 	 * @return The next menu item
 	 */
 	private ScreenType getNextMenuItem(ScreenType selectedMenuItem) {
-		if (selectedMenuItem == ScreenType.HighScroreScreen)
-			return ScreenType.EndGame;
-		else if (selectedMenuItem == ScreenType.EndGame)
-			return ScreenType.GameScreen;
-		else
-			return ScreenType.HighScroreScreen;
+		return ScreenType.GameScreen;
 	}
 
 	/**
@@ -95,12 +90,7 @@ public class TitleScreen extends Screen {
 	 * @return The previous menu item
 	 */
 	private ScreenType getPreviousMenuItem(ScreenType selectedMenuItem) {
-		if (selectedMenuItem == ScreenType.EndGame)
-			return ScreenType.HighScroreScreen;
-		else if (selectedMenuItem == ScreenType.GameScreen)
-			return ScreenType.EndGame;
-		else
-			return ScreenType.GameScreen;
+		return ScreenType.GameScreen;
 	}
 
 	/**
