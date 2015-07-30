@@ -1,38 +1,66 @@
 # Invaders
-This repo is designed to give new Java programming students practice using basic programming concepts all while they develop the classicly fun game [Space Invaders](http://en.wikipedia.org/wiki/Space_Invaders).
+This repo is designed to give new students of the Java programming language practice using basic programming concepts, all while they develop the classicly fun game [Space Invaders](http://en.wikipedia.org/wiki/Space_Invaders).
 
-### Screenshots
-![](http://i.minus.com/ijt8HhaA8laZq.png)
+*I verified that this code works on Windows machines. However, it should run on any operating system.
+
+![image](https://cloud.githubusercontent.com/assets/2764891/8973940/7a4d5514-3620-11e5-8edd-f2a3f331eea5.png)
 
 ### Download
-You will need to install Java 7+ to run the game (see step 1 in the setup section below). Once you have Java installed download a working version of the game [here](https://github.com/rcjames1004/Invaders/releases/download/1.0/Invaders.jar). Double click on Invaders.jar (the downloaded file) to run the game.
+You will need to download and install Java Development Kit (JDK) 7 or greater to run this game (see step 1 in the setup section below for instructions on how to dowload and install it). Once you have the JDK installed download a working version of this game [here (Invaders.jar)](https://github.com/rcjames1004/Invaders/releases/download/1.0/Invaders.jar). When the download is complete double click on Invaders.jar (the downloaded file) to run the game.
 
 
-# Prerequisites
-Students who use this repo are expected to have learned about the following programming concepts:
+# Programming Concepts
+Students who use this repo are expected to have previously learned about the following programming concepts:
 
 1. Data types. For example, ```int```, ```double```, and ```String```
 2. Conditional branching: ```if```/```if else```/```else```
 2. Looping: ```while``` and ```for```
-3. Arrays: For example, ```int[] array = new int[2]; array[0] = 10; array[1] = 20;```
-4. Functions: Students should have learned how to call functions and write their own functions, whith and without parameters
+3. Arrays: Creating and indexing. For example, ```int[] array = new int[2]; array[0] = 10; array[1] = 20;```
+4. Functions: Students should have learned how to call and write their own functions whith and without parameters and return values. For example:
 
-This repo will give students expereience creating [Space Invaders](http://en.wikipedia.org/wiki/Space_Invaders) using the concepts above.
+```java
+public static int add(int a, int b) {
+    return a + b;
+}
 
-Before you get started make sure you are setup.
+// Add 5 + 6
+int sum = add(5, 6);
+```
 
-### Setup
-(Due to a time constraint I'm only going to include brief instructions here because my class is already [mostly] setup. I will include more detailed instructions later as other classes use this repo)
+This repo will ask students to apply the concepts above to create [Space Invaders](http://en.wikipedia.org/wiki/Space_Invaders).
 
-1. Install Java 7+
-2. Install Git
-3. Install IntelliJ IDEAW (we used IntelliJ IDEA in my class. Feel free to use whatever environment that works best for you.)
-4. Fork this repo
--If students are in groups only one student from each group should for this repo by clicking the ![image](https://cloud.githubusercontent.com/assets/2764891/8971994/9dae9f10-360a-11e5-84f9-d1e7ef151664.png) button above.
-5. FINISH
-
+# Getting Started
 
 ### System Requirements
--Java 7+
--Git
--IntelliJ IDEA (or your favorite development environment)
+(see Setup for more detailed instructions)
+
+- JDK 7 or greater
+- Git
+- IntelliJ IDEA (or your favorite development environment)
+
+### Setup
+
+1. [Install 7+ JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+2. Install Git (I like this package -> [GitHub for Windows](https://windows.github.com/)
+3. [Install IntelliJ IDEA](https://www.jetbrains.com/idea/) - we used IntelliJ IDEA in my class. Feel free to use the environment that works best for you.
+4. [Fork this repo](https://help.github.com/articles/fork-a-repo/)
+  - If students are in groups only one student from each group should create a fork
+  - After forking the repo [add other members of your group as [collaborators](https://help.github.com/articles/adding-collaborators-to-a-personal-repository/)
+5. Clone THE FORKED repo (not the original repo) - [Instructions for cloning in IntelliJ IDEA](https://www.jetbrains.com/idea/help/cloning-a-repository-from-github.html)
+
+### Working on issues
+Issues should be worked on in order starting at #1. Each issue states the problem, and describes detailed instructions for how to fix it. When code that fixes an issue is pushed to the forked repo, the associated issue should be closed and students should move on to the next issue.
+
+To better prepare you for issues I've tagged each with two labels:
+
+1. Type: bug | enhancement
+2. Difficulty: easy | medium | hard | really hard 
+
+bug - an issue in the game that needs to be fixed for the bug to work properly
+enhancement - a bonus feature that will make the game even better
+
+easy - an easy issue to fix
+medium - a medium issue to fix
+...and so on...
+
+# Happy Coding :smiley:!
