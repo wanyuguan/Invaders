@@ -56,15 +56,11 @@ Issues should be worked on in order starting at #1. Each issue states the proble
 To better prepare students for issues I've tagged each with two labels:
 
 1. Type: bug | enhancement
-2. Difficulty: easy | medium | hard | really hard 
-
-bug - an issue in the game that needs to be fixed for the bug to work properly
-enhancement - a bonus feature that will make the game even better
-
-easy - an easy issue to fix
-
-medium - a medium issue to fix
-
-...and so on...
+    * bug - an issue in the game that needs to be fixed for the bug to work properly
+    * enhancement - a bonus feature that will make the game even better
+2. Difficulty: easy | medium | hard | really hard
+    * easy - an easy issue to fix
+    * medium - a medium issue to fix
+    * ...and so on...
 
 # Happy Coding :smiley:!
