@@ -180,6 +180,13 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 	 * Draws every individual component of the formation.
 	 */
 	public final void draw() {
+		//int=0;
+		EnemyShip[][] enemyShips = getEnemyShipsToDraw();
+		for (int i = 0;i < enemyShips.length; i++) {
+			for (int j =0; j<enemyShips[i].length;i ++){
+				drawManager.drawEntity(enemyShips[i][j]);
+	}
+	}
 		// Enemy ships is a two dimensional array containing enemy ships.
 		// The first (outer) array is an array of rows.
 		// Each row is an array of ships.
@@ -197,7 +204,7 @@ public class EnemyShipFormation implements Iterable<EnemyShip> {
 		// To draw each ship we need to loop over the outer array
 		// and retrieve each row. Then, once we have a row
 		// we need to loop over that row and draw each ship
-		EnemyShip[][] enemyShips = getEnemyShipsToDraw();
+
 	}
 
 	/**
