@@ -52,19 +52,14 @@ public class Ship extends Entity {
 	public void checkMovement(Screen screen) {
 		// Detects whether the ship is not touching the right border
 		boolean isShipNotTouchingRightBorder = !(this.getPositionX() + this.getWidth() + this.getSpeed() > screen.getWidth() - 1);
+		boolean isShipNotTouchingLeftBorder = !(this.getPositionX() - this.getSpeed() < 1);
 		if (Main.getInputManager().isRightKeyDown() && isShipNotTouchingRightBorder) {
 			this.moveRight();
-		} else if (Main.getInputManager().isLeftKeyDown() &&isShipNotTouchingRightBorder ) {
+		} else if (Main.getInputManager().isLeftKeyDown() &&isShipNotTouchingLeftBorder ) {
 			this.moveLeft();
 		}
 
 		// Detects whether the ship is not touching the left border
-		boolean isShipNotTouchingLeftBorder = !(this.getPositionX() - this.getSpeed() < 1);
-		if (Main.getInputManager().isLeftKeyDown() && isShipNotTouchingLeftBorder) {
-			this.moveLeft();
-		} else if (Main.getInputManager().isRightKeyDown()&&isShipNotTouchingLeftBorder ) {
-			this.moveRight();
-		}
 
 	}
 
